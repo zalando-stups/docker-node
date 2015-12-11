@@ -1,5 +1,5 @@
 FROM zalando/ubuntu:15.10-3
-MAINTAINER Karsten Gallinowski <karsten.gallinowski@zalando.de>
+MAINTAINER Zalando SE
 
 # snippet from https://github.com/nodejs/docker-node/blob/bb89224e0f2572e4894c50abfa8174ca65d6b28f/5.1/Dockerfile
 
