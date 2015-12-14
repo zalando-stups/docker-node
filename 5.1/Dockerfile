@@ -1,4 +1,4 @@
-FROM zalando/ubuntu:15.10-3
+FROM registry.opensource.zalan.do/stups/ubuntu:15.10-13
 MAINTAINER Zalando SE
 
 # snippet from https://github.com/nodejs/docker-node/blob/bb89224e0f2572e4894c50abfa8174ca65d6b28f/5.1/Dockerfile
