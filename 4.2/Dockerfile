@@ -1,9 +1,10 @@
-FROM registry.opensource.zalan.do/stups/ubuntu:15.10-13
+# note: UPSTREAM is replaced by STUPS CD pipeline
+
+FROM registry.opensource.zalan.do/stups/ubuntu:UPSTREAM
 MAINTAINER Zalando SE
 
 # snippet from https://github.com/nodejs/docker-node/blob/bb89224e0f2572e4894c50abfa8174ca65d6b28f/4.2/Dockerfile
 
-# gpg keys listed at https://github.com/nodejs/node
 RUN set -ex \
   && for key in \
     9554F04D7259F04124DE6B476D5A82AC7E37093B \
@@ -17,8 +18,8 @@ RUN set -ex \
   done
 
 ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 4.2.3
-ENV NPM_VERSION 3.3.12
+ENV NODE_VERSION 4.2.4
+ENV NPM_VERSION 3.5.3
 
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" \
   && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
