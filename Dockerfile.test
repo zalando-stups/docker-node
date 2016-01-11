@@ -1,0 +1,4 @@
+FROM UNTESTED
+
+COPY test.js /
+RUN node /test.js
