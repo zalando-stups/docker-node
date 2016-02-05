@@ -7,13 +7,7 @@ Versions of this image will be immutable, i.e. there is no "latest" tag, but ins
 
     <NODE_VERSION>-<COUNTER> (example: "0.12.7-1")
 
-Build the Docker image and squash it with a single command:
+You can find the `latest Node.js Docker in our open source registry.`_.
 
-.. code-block::
-
-    $ ./build.sh
-
-You can find the `latest Node.js Docker image on Docker Hub`_.
-
-.. _latest Node.js Docker image on Docker Hub: https://registry.hub.docker.com/u/zalando/node/
+.. _latest Node.js Docker in our open source registry.: https://registry.opensource.zalan.do/teams/stups/artifacts/node/tags
 
