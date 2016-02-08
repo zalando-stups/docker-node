@@ -20,7 +20,7 @@ RUN set -ex \
 
 ENV NPM_CONFIG_LOGLEVEL info
 ENV NODE_VERSION 4.2.6
-ENV NPM_VERSION 3.5.3
+ENV NPM_VERSION 3.7.1
 
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" \
   && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
