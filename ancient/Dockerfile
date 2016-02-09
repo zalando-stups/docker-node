@@ -19,7 +19,7 @@ RUN set -ex \
   done
 
 ENV NODE_VERSION 0.12.9
-ENV NPM_VERSION 3.5.3
+ENV NPM_VERSION 3.7.1
 
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" \
   && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
