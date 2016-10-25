@@ -3,7 +3,7 @@
 FROM registry.opensource.zalan.do/stups/ubuntu:UPSTREAM
 MAINTAINER Zalando SE
 
-# snippet from https://github.com/nodejs/docker-node/blob/4ad33b57b2fa9d9bfc92e2369b14adb42e1eb90c/4.5/wheezy/Dockerfile
+# snippet from https://github.com/nodejs/docker-node/blob/a37f33d34909d9e700b2875c684b8e728b236dc4/4.6/wheezy/Dockerfile
 
 RUN set -ex \
   && for key in \
@@ -20,8 +20,8 @@ RUN set -ex \
   done
 
 ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 4.5.0
-ENV NPM_VERSION 3.10.6
+ENV NODE_VERSION 4.6.1
+ENV NPM_VERSION 3.10.9
 
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" \
   && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
