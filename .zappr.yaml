@@ -1,0 +1,10 @@
+# Every PR needs two approvals from Zalando employees.
+approvals:
+  groups:
+    zalando:
+      minimum: 2
+      from:
+        orgs:
+          - zalando
+          
+X-Zalando-Team: stups
