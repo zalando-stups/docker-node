@@ -1,0 +1,26 @@
+build_steps:
+    - desc: 'Install Docker'
+      cmd: 'curl -sSL https://get.docker.com/ | sh'
+    - desc: 'Install docker-squash'
+      cmd: 'curl -sL https://github.com/jwilder/docker-squash/releases/download/v0.2.0/docker-squash-linux-amd64-v0.2.0.tar.gz | tar -xvz'
+    - desc: 'Build Stable'
+      cmd: |
+        image=node-stable-temp:${CDP_BUILD_VERSION}
+        docker build -t $image -f stable/Dockerfile .
+        # squash to one layer
+        docker save $image | ./docker-squash -verbose -from root -t $image | docker load
+        sed -i "s,UNTESTED,$image,g" Dockerfile.test
+        docker build -t $image-test -f Dockerfile.test .
+        # get current Node version
+        out=$(docker run $image-test)
+        echo "$out"
+        # e.g. "Python Version: CPython 3.6.1"
+        version=$(echo "$out" | grep 'node:' | awk '{ print $2}')
+        release=registry-write.opensource.zalan.do/stups/python:$version-${CDP_TARGET_BRANCH_COUNTER}
+        docker tag $image $release
+        if [[ ${IS_PR_BUILD} != "true" ]]
+        then
+            docker push $release
+        else
+            echo "Image not pushed because the build is not a push to master"
+        fi
