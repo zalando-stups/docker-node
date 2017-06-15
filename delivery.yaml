@@ -16,8 +16,9 @@ build_steps:
         echo "$out"
         # e.g. "node: 7.10.0"
         version=$(echo "$out" | grep 'node:' | awk '{ print $2}')
-        release=registry-write.opensource.zalan.do/stups/python:$version-${CDP_TARGET_BRANCH_COUNTER}
+        release=registry-write.opensource.zalan.do/stups/node:$version-${CDP_TARGET_BRANCH_COUNTER}
         docker tag $image $release
+        IS_PR_BUILD=${CDP_PULL_REQUEST_NUMBER+"true"}
         if [[ ${IS_PR_BUILD} != "true" ]]
         then
             docker push $release
