@@ -14,7 +14,7 @@ build_steps:
         # get current Node version
         out=$(docker run $image-test)
         echo "$out"
-        # e.g. "Python Version: CPython 3.6.1"
+        # e.g. "node: 7.10.0"
         version=$(echo "$out" | grep 'node:' | awk '{ print $2}')
         release=registry-write.opensource.zalan.do/stups/python:$version-${CDP_TARGET_BRANCH_COUNTER}
         docker tag $image $release
