@@ -1,5 +1,3 @@
-# note: UPSTREAM is replaced by STUPS CD pipeline
-
 FROM registry.opensource.zalan.do/stups/ubuntu:latest
 MAINTAINER Zalando SE
 
