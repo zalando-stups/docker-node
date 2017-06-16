@@ -31,7 +31,7 @@ RUN gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc
 RUN grep " node-v$NODE_VERSION-linux-x64.tar.gz\$" SHASUMS256.txt | sha256sum -c -
 RUN tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1
 RUN rm "node-v$NODE_VERSION-linux-x64.tar.gz" SHASUMS256.txt.asc SHASUMS256.txt
-RUN npm install -g npm@"$NPM_VERSION"
+RUN npm install -g npm@"$NPM_VERSION" > /dev/null
 RUN npm cache clear
 
 CMD [ "node" ]
