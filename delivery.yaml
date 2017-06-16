@@ -16,6 +16,8 @@ build_steps:
         systemctl status docker
     - desc: 'Build LTS'
       cmd: |
+        export LANG=en_US.UTF-8
+        export LC_ALL=en_US.UTF-8
         # build
         image=node-lts-temp:${CDP_BUILD_VERSION}
         docker build -t $image --squash -f lts/Dockerfile --no-cache .
