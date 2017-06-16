@@ -14,28 +14,28 @@ build_steps:
         apt-get update
         apt-get install -y docker-ce
         systemctl status docker
-#    - desc: 'Build LTS'
-#      cmd: |
-#        # build
-#        image=node-lts-temp:${CDP_BUILD_VERSION}
-#        docker build -t $image --squash -f lts/Dockerfile --no-cache .
-#        # test
-#        sed -i "s,UNTESTED,$image,g" Dockerfile.test
-#        docker build -t $image-test -f Dockerfile.test .
-#        # get current Node version
-#        out=$(docker run $image-test)
-#        echo "$out"
-#        # e.g. "node: 7.10.0"
-#        version=$(echo "$out" | grep 'node:' | awk '{ print $2}')
-#        release=registry-write.opensource.zalan.do/stups/node:$version-${CDP_TARGET_BRANCH_COUNTER}
-#        IS_PR_BUILD=${CDP_PULL_REQUEST_NUMBER+"true"}
-#        if [[ ${IS_PR_BUILD} != "true" ]]
-#        then
-#            docker tag $image $release
-#            docker push $release
-#        else
-#            echo "Image $release not pushed because the build is not a push to master"
-#        fi
+    - desc: 'Build LTS'
+      cmd: |
+        # build
+        image=node-lts-temp:${CDP_BUILD_VERSION}
+        docker build -t $image --squash -f lts/Dockerfile --no-cache .
+        # test
+        sed -i "s,UNTESTED,$image,g" Dockerfile.test
+        docker build -t $image-test -f Dockerfile.test .
+        # get current Node version
+        out=$(docker run $image-test)
+        echo "$out"
+        # e.g. "node: 7.10.0"
+        version=$(echo "$out" | grep 'node:' | awk '{ print $2}')
+        release=registry-write.opensource.zalan.do/stups/node:$version-${CDP_TARGET_BRANCH_COUNTER}
+        IS_PR_BUILD=${CDP_PULL_REQUEST_NUMBER+"true"}
+        if [[ ${IS_PR_BUILD} != "true" ]]
+        then
+            docker tag $image $release
+            docker push $release
+        else
+            echo "Image $release not pushed because the build is not a push to master"
+        fi
     - desc: 'Build Stable'
       cmd: |
         # build
