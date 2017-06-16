@@ -15,6 +15,7 @@ build_steps:
 #        apt-get install -y docker-ce
 #        systemctl status docker
     - desc: 'Install docker'
+      cmd: |
         curl -sSL https://get.docker.com/ | sh
     - desc: 'Build LTS'
       cmd: |
