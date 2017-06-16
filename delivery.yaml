@@ -18,7 +18,7 @@ build_steps:
       cmd: |
         # build
         image=node-lts-temp:${CDP_BUILD_VERSION}
-        docker build -t $image --squash -f lts/Dockerfile .
+        docker build -t $image --squash -f lts/Dockerfile --no-cache .
         # test
         sed -i "s,UNTESTED,$image,g" Dockerfile.test
         docker build -t $image-test -f Dockerfile.test .
@@ -40,7 +40,7 @@ build_steps:
       cmd: |
         # build
         image=node-stable-temp:${CDP_BUILD_VERSION}
-        docker build -t $image --squash -f stable/Dockerfile .
+        docker build -t $image --squash -f stable/Dockerfile --no-cache .
         # test
         sed -i "s,UNTESTED,$image,g" Dockerfile.test
         docker build -t $image-test -f Dockerfile.test .
