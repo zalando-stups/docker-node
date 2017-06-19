@@ -31,7 +31,13 @@ RUN gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc
 RUN grep " node-v$NODE_VERSION-linux-x64.tar.gz\$" SHASUMS256.txt | sha256sum -c -
 RUN tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1
 RUN rm "node-v$NODE_VERSION-linux-x64.tar.gz" SHASUMS256.txt.asc SHASUMS256.txt
-RUN npm install -g npm@"$NPM_VERSION" > /dev/null
+# npm 3 is apparently broken. It doesn't install all dependenices properly when using the "-g" flag.
+# workaround: install npm locally first, then run the local installation to install npm globally :facepalm:
+RUN mkdir /tmp/npm_install && \
+    cd /tmp/npm_install && \
+    npm install npm@"$NPM_VERSION" > /dev/null && \
+    /tmp/npm_install/node_modules/.bin/npm install -g npm@"$NPM_VERSION" > /dev/null && \
+    rm -rf /tmp/npm_install
 RUN npm cache clear
 
 CMD [ "node" ]
