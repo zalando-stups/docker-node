@@ -37,6 +37,7 @@ RUN mkdir /tmp/npm_install && \
     cd /tmp/npm_install && \
     npm install npm@"$NPM_VERSION" > /dev/null && \
     /tmp/npm_install/node_modules/.bin/npm install -g npm@"$NPM_VERSION" > /dev/null && \
+    /tmp/npm_install/node_modules/.bin/npm install -g npm@"$NPM_VERSION" > /dev/null && \
     rm -rf /tmp/npm_install
 RUN npm cache clear
 
