@@ -1,4 +1,4 @@
 FROM UNTESTED
 
 COPY test.js /
-RUN node /test.js
+CMD node /test.js

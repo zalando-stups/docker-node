@@ -1,6 +1,4 @@
-# note: UPSTREAM is replaced by STUPS CD pipeline
-
-FROM registry.opensource.zalan.do/stups/ubuntu:UPSTREAM
+FROM registry.opensource.zalan.do/stups/ubuntu:latest
 MAINTAINER Zalando SE
 
 # snippet from https://github.com/nodejs/docker-node/blob/0cc4ebee1bdaf90402e68d1a3d469e8f3712337d/7.2/wheezy/Dockerfile

@@ -1,6 +1,4 @@
-# note: UPSTREAM is replaced by STUPS CD pipeline
-
-FROM registry.opensource.zalan.do/stups/ubuntu:UPSTREAM
+FROM registry.opensource.zalan.do/stups/ubuntu:latest
 MAINTAINER Zalando SE
 
 # snippet from https://github.com/nodejs/docker-node/blob/0cc4ebee1bdaf90402e68d1a3d469e8f3712337d/6.9/wheezy/Dockerfile
@@ -24,16 +22,23 @@ RUN set -ex \
   done
 
 ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 6.10.3
-ENV NPM_VERSION 4.5.0
+ENV NODE_VERSION 6.11.0
+ENV NPM_VERSION 4.6.1
 
-RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" \
-  && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
-  && gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc \
-  && grep " node-v$NODE_VERSION-linux-x64.tar.gz\$" SHASUMS256.txt | sha256sum -c - \
-  && tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 \
-  && rm "node-v$NODE_VERSION-linux-x64.tar.gz" SHASUMS256.txt.asc SHASUMS256.txt \
-  && npm install -g npm@"$NPM_VERSION" \
-  && npm cache clear
+RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz"
+RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc"
+RUN gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc
+RUN grep " node-v$NODE_VERSION-linux-x64.tar.gz\$" SHASUMS256.txt | sha256sum -c -
+RUN tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1
+RUN rm "node-v$NODE_VERSION-linux-x64.tar.gz" SHASUMS256.txt.asc SHASUMS256.txt
+# npm 3 is apparently broken. It doesn't install all dependenices properly when using the "-g" flag.
+# workaround: install npm locally first, then run the local installation to install npm globally :facepalm:
+RUN mkdir /tmp/npm_install && \
+    cd /tmp/npm_install && \
+    npm install npm@"$NPM_VERSION" > /dev/null && \
+    /tmp/npm_install/node_modules/.bin/npm install -g npm@"$NPM_VERSION" > /dev/null && \
+    /tmp/npm_install/node_modules/.bin/npm install -g npm@"$NPM_VERSION" > /dev/null && \
+    rm -rf /tmp/npm_install
+RUN npm cache clear
 
 CMD [ "node" ]
