@@ -38,6 +38,8 @@ build_steps:
         fi
     - desc: 'Build Stable'
       cmd: |
+        # reset workpace from lts build
+        git reset --hard
         # build
         image=node-stable-temp:${CDP_BUILD_VERSION}
         docker build -t $image --squash -f stable/Dockerfile --no-cache .
