@@ -22,7 +22,6 @@ RUN set -ex \
 
 ENV NPM_CONFIG_LOGLEVEL info
 ENV NODE_VERSION 6.11.1
-ENV NPM_VERSION 4.6.1
 
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz"
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc"
@@ -30,6 +29,8 @@ RUN gpg --batch --decrypt --output SHASUMS256.txt SHASUMS256.txt.asc
 RUN grep " node-v$NODE_VERSION-linux-x64.tar.gz\$" SHASUMS256.txt | sha256sum -c -
 RUN tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1
 RUN rm "node-v$NODE_VERSION-linux-x64.tar.gz" SHASUMS256.txt.asc SHASUMS256.txt
+
+ENV NPM_VERSION 4.6.1
 # npm 3 is apparently broken. It doesn't install all dependenices properly when using the "-g" flag.
 # workaround: install npm locally first, then run the local installation to install npm globally :facepalm:
 RUN mkdir /tmp/npm_install && \
