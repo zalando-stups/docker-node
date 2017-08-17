@@ -36,13 +36,13 @@ build_steps:
         else
             echo "Image $release not pushed because the build is not a push to master"
         fi
-    - desc: 'Build Stable'
+    - desc: 'Build Current'
       cmd: |
         # reset workpace from lts build
         git reset --hard
         # build
-        image=node-stable-temp:${CDP_BUILD_VERSION}
-        docker build -t $image --squash -f stable/Dockerfile --no-cache .
+        image=node-current-temp:${CDP_BUILD_VERSION}
+        docker build -t $image --squash -f current/Dockerfile --no-cache .
         # test
         sed -i "s,UNTESTED,$image,g" Dockerfile.test
         docker build -t $image-test -f Dockerfile.test .
