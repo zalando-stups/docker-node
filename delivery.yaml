@@ -36,6 +36,30 @@ build_steps:
         else
             echo "Image $release not pushed because the build is not a push to master"
         fi
+    - desc: 'Build LTS alpine'
+      cmd: |
+        # reset workpace from lts build
+        git reset --hard
+        # build
+        image=node-lts-alpine-temp:${CDP_BUILD_VERSION}
+        docker build -t $image --squash -f lts/Dockerfile.alpine --no-cache .
+        # test
+        sed -i "s,UNTESTED,$image,g" Dockerfile.test
+        docker build -t $image-test -f Dockerfile.test .
+        # get current Node version
+        out=$(docker run $image-test)
+        echo "$out"
+        # e.g. "node: 7.10.0-alpine"
+        version=$(echo "$out" | grep 'node:' | awk '{ print $2}')
+        release=registry-write.opensource.zalan.do/stups/node:$version-alpine-${CDP_TARGET_BRANCH_COUNTER}
+        IS_PR_BUILD=${CDP_PULL_REQUEST_NUMBER+"true"}
+        if [[ ${IS_PR_BUILD} != "true" ]]
+        then
+            docker tag $image $release
+            docker push $release
+        else
+            echo "Image $release not pushed because the build is not a push to master"
+        fi
     - desc: 'Build Current'
       cmd: |
         # reset workpace from lts build
@@ -52,6 +76,30 @@ build_steps:
         # e.g. "node: 7.10.0"
         version=$(echo "$out" | grep 'node:' | awk '{ print $2}')
         release=registry-write.opensource.zalan.do/stups/node:$version-${CDP_TARGET_BRANCH_COUNTER}
+        IS_PR_BUILD=${CDP_PULL_REQUEST_NUMBER+"true"}
+        if [[ ${IS_PR_BUILD} != "true" ]]
+        then
+            docker tag $image $release
+            docker push $release
+        else
+            echo "Image $release not pushed because the build is not a push to master"
+        fi
+    - desc: 'Build Current alpine'
+      cmd: |
+        # reset workpace from lts build
+        git reset --hard
+        # build
+        image=node-current-alpine-temp:${CDP_BUILD_VERSION}
+        docker build -t $image --squash -f current/Dockerfile --no-cache .
+        # test
+        sed -i "s,UNTESTED,$image,g" Dockerfile.test
+        docker build -t $image-test -f Dockerfile.test .
+        # get current Node version
+        out=$(docker run $image-test)
+        echo "$out"
+        # e.g. "node: 7.10.0-alpine"
+        version=$(echo "$out" | grep 'node:' | awk '{ print $2}')
+        release=registry-write.opensource.zalan.do/stups/node:$version-alpine-${CDP_TARGET_BRANCH_COUNTER}
         IS_PR_BUILD=${CDP_PULL_REQUEST_NUMBER+"true"}
         if [[ ${IS_PR_BUILD} != "true" ]]
         then
