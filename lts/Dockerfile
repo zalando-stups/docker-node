@@ -6,6 +6,16 @@ MAINTAINER Zalando SE
 RUN groupadd --gid 1000 node \
   && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
 
+RUN set -ex; \
+	if ! command -v gpg > /dev/null; then \
+		apt-get update; \
+		apt-get install -y --no-install-recommends \
+			gnupg \
+			dirmngr \
+		; \
+		rm -rf /var/lib/apt/lists/*; \
+	fi
+
 # gpg keys listed at https://github.com/nodejs/node#release-team
 RUN set -ex \
   && for key in \
