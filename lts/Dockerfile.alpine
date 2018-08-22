@@ -1,4 +1,4 @@
-FROM registry.opensource.zalan.do/stups/alpine:3.5-cd10
+FROM registry.opensource.zalan.do/stups/alpine:latest
 MAINTAINER Zalando SE
 
 ENV NODE_VERSION 8.11.4
