@@ -1,5 +1,5 @@
 FROM registry.opensource.zalan.do/stups/alpine:latest
-MAINTAINER Zalando SE
+LABEL maintainer "Zalando SE"
 
 # snippet from: https://github.com/nodejs/docker-node/blob/72dd945d29dee5afa73956ebc971bf3a472442f7/8/alpine/Dockerfile
 

@@ -1,5 +1,5 @@
 FROM registry.opensource.zalan.do/stups/ubuntu:latest
-MAINTAINER Zalando SE
+LABEL maintainer "Zalando SE"
 
 RUN set -ex; \
        apt-get update; \
