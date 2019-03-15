@@ -3,7 +3,7 @@ LABEL maintainer "Zalando SE"
 
 # snippet from: https://github.com/nodejs/docker-node/blob/72dd945d29dee5afa73956ebc971bf3a472442f7/8/alpine/Dockerfile
 
-ENV NODE_VERSION 10.15.1
+ENV NODE_VERSION 10.15.3
 
 RUN addgroup -g 1000 node \
     && adduser -u 1000 -G node -s /bin/sh -D node \
